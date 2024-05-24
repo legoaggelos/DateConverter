@@ -1,10 +1,9 @@
 package com.legoaggelos;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Locale;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -68,7 +67,10 @@ public class Main {
                     }
                 }
                 ZonedDateTime newTime = inputTime.withZoneSameInstant(timezoneNew);
-                System.out.println("The initial date and time in " + timezoneInitial + " is " + newTime + "(YYYY-MM-DDTHH-MM-SS-TIMEZONE) in " + timezoneNew + ".");
+                System.out.println("The initial date and time in " + timezoneInitial + " is " + convertDateTimeToStringNew(newTime) + "(YYYY-MM-DD@HH-MM-SS) in " + timezoneNew + ".");
+            }
+            if((!command.equals("convert")||command.equals("now")||command.equals("exit"))){
+                System.out.println("Invalid command.");
             }
             System.out.println("Enter next command:");
         }
@@ -78,5 +80,34 @@ public class Main {
         String result = now.toString().split("\\.")[0];
         String[] removeT = result.split("T");
         return removeT[0] + "-" + removeT[1];
+    }
+    public static String convertDateTimeToStringNew(ZonedDateTime now) {
+        String[] result = now.toString().split(":");
+        String remaining = arrayToString(result).split("\\[")[0].split("\\.")[0].replace('T','@');
+        char[] charArray = remaining.toCharArray();
+        for (int i = 0; i <3.1; i += 3) {
+            charArray=addCharToCharArray(charArray,remaining.indexOf("@")+3+i,':');
+        }
+        String temp = arrayToString(charArray);
+        temp=temp.split("-")[0]+"-"+temp.split("-")[1]+"-"+temp.split("-")[2];
+        return temp.replace(":","-");
+    }
+    public static String arrayToString(String[] array){
+        StringBuilder string = new StringBuilder();
+        Arrays.stream(array).forEach(string::append);
+        return string.toString();
+    }
+    public static String arrayToString(char[] array){
+        StringBuilder string = new StringBuilder();
+        for (char c:
+             array) {
+            string.append(c);
+        }
+        return string.toString();
+    }
+    public static char[] addCharToCharArray(char[] array, int index, char c){
+        String string = arrayToString(array);
+        string=string.replace(string.substring(index), c +string.substring(index));
+        return string.toCharArray();
     }
 }
