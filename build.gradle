@@ -1,7 +1,11 @@
 plugins {
     id 'java'
 }
-
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.legoaggelos.Main'
+    }
+}
 group = 'com.legoaggelos'
 version = '1.0-SNAPSHOT'
 
