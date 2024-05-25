@@ -3,6 +3,7 @@ package com.legoaggelos;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.FormatStyle;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -69,7 +70,6 @@ public class Main {
                     }
                 }
                 ZonedDateTime newTime = inputTime.withZoneSameInstant(timezoneNew);
-                System.out.println(newTime);
                 System.out.println("The initial date and time in " + timezoneInitial + " is " + convertDateTimeToStringNew(newTime) + "(YYYY-MM-DD@HH-MM-SS) in " + timezoneNew + ".");
             } else{
                 System.out.println("Invalid command.");

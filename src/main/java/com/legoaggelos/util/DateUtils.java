@@ -1,9 +1,13 @@
 package com.legoaggelos.util;
 
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.time.zone.ZoneRulesException;
+import java.util.Locale;
 
 import static com.legoaggelos.util.DateFormattingUtils.addCharToCharArray;
 import static com.legoaggelos.util.DateFormattingUtils.arrayToString;
@@ -12,10 +16,10 @@ public class DateUtils {
     public static String convertDateTimeToString(ZonedDateTime now) {
         String result = now.toString().split("\\.")[0];
         String[] removeT = result.split("T");
-        return removeT[0] + "-" + removeT[1];
+        return removeT[0] + "@" + removeT[1];
     }
     public static String convertDateTimeToStringNew(ZonedDateTime now) {
-        String[] result = now.toString().split(":");
+        /*String[] result = now.toString().split(":");
         String remaining = arrayToString(result).split("\\[")[0].split("\\.")[0].replace('T','@');
         char[] charArray = remaining.toCharArray();
         for (int i = 0; i <3.1; i += 3) {
@@ -23,7 +27,14 @@ public class DateUtils {
         }
         String temp = arrayToString(charArray);
         temp=temp.split("-")[0]+"-"+temp.split("-")[1]+"-"+temp.split("-")[2];
-        return temp.replace(":","-");
+        return temp.replace(":","-");*/
+        Locale usLocale = new Locale("en", "US");
+
+        ZonedDateTime today = now;
+
+        DateTimeFormatter myDateTimeFormatter = DateTimeFormatter
+                .ofPattern("uuuu-MM-dd@HH-mm-ss");
+        return today.format(myDateTimeFormatter);
     }
     public static ZoneId customZoneId(String timezone) throws DateTimeException {
         timezone=timezone.trim().toUpperCase();
